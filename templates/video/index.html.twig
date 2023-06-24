@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gestion vidéos' %}
+
+{% block content %}
+	<div class="album py-5 bg-body-tertiary">
+		<div class="container">
+			<div class="row">
+				<h1 class="mb-2">Gestion des vidéos</h1>
+				<div class="col-2 mb-5">
+					<a href="{{ path('app_video_new') }}" class="btn btn-sm btn-success">Créer une vidéo</a>
+				</div>
+				<div class="w-100"></div>
+				<div class="col">
+					<div class="table-responsive small">
+						<table class="table table-striped table-sm">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Titre</th>
+									<th scope="col">Description</th>
+									<th scope="col">Catégories</th>
+									<th scope="col">Url</th>
+									<th scope="col">Thumbnail</th>
+									<th scope="col">Date création</th>
+									<th scope="col">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for video in videos %}
+									<tr class="align-middle text-start">
+										<td>{{ video.id }}</td>
+										<td>
+											<b>{{ video.title }}</b>
+										</td>
+										<td>
+											<i class="text-secondary">{{ video.description }}</i>
+										</td>
+										<td>
+											<ul>
+												{% for tag in video.tags %}
+													<li>{{ tag.name }}</li>
+												{% endfor %}
+											</ul>
+										</td>
+										<td>
+											<a href="{{ video.url }}">Accéder à la vidéo</a>
+										</td>
+										<td class="p-3"><img class="rounded" src="{{ video.thumbnail }}" alt="Thumbnail"></td>
+										<td>
+											<i class="text-secondary">{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</i>
+										</td>
+										<td>
+											<a href="{{ path('app_video_show', {'id': video.id}) }}">Voir la vidéo</a>
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="8">Tableau vide</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

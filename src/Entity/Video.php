@@ -8,6 +8,7 @@ use App\Repository\VideoRepository;
 use App\Entity\Traits\EntityTimeTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
@@ -40,6 +41,8 @@ class Video
     {
         $this->playlist = new ArrayCollection();
         $this->tag = new ArrayCollection();
+        //Ajouter par défaut une date d'ajout
+        $this->setCreatedAt(new \DateTime());
     }
 
     public function getId(): ?int

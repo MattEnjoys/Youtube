@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{# Pour la traduction #}
 <html lang="{{ app.request.locale }}">
 	<head>
 		<meta charset="UTF-8">
@@ -43,18 +42,18 @@
 								</form>
 							</div>
 							<div class="col-3">
-								{# <div class="text-end">
+								<div class="text-end">
 									{% if is_granted('ROLE_ADMIN') %}
 										<a href="{{ path('app_video_index') }}" title="Gérez les vidéos" class="btn btn-secondary text-white">Gérer les vidéos</a>
 									{% endif %}
 									{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-										<a href="{{ path('app_playlist_index') }}" title="Voir ses playlists" class="btn btn-secondary text-white">Mes playlists</a>
+										{# <a href="{{ path('app_playlist_index') }}" title="Voir ses playlists" class="btn btn-secondary text-white">Mes playlists</a> #}
 										<a href="{{ path('app_logout') }}" title="Se déconnecter" class="btn btn-dark text-white">Déconnexion</a>
 									{% else %}
 										<a href="{{ path('app_login') }}" title="Se connecter" class="btn btn-dark text-white">Connexion</a>
 										<a href="{{ path('app_register') }}" title="S'inscrire" class="btn btn-info text-white">Inscription</a>
 									{% endif %}
-								</div> #}
+								</div>
 							</div>
 						</div>
 					</div>

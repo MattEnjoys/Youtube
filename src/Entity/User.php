@@ -7,10 +7,13 @@ use App\Repository\UserRepository;
 use App\Entity\Traits\EntityTimeTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use DateTime;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use EntityTimeTrait;
@@ -37,6 +40,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->playlists = new ArrayCollection();
+        // 1 - Pour que l'inscription d'un nouvel utilisateur se fasse, il faut replir la condition du setCreatedAt() grace à l'entityTimeTrait.php donc il faut rajouter ceci
+        $this->setCreatedAt(new Datetime());
     }
 
     public function getId(): ?int
