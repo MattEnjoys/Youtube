@@ -2,17 +2,18 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\EntityTimeTrait;
+use App\Repository\TagRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\TagRepository;
-use App\Entity\Traits\EntityTimeTrait;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
     use EntityTimeTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -24,7 +25,8 @@ class Tag
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'tag')]
+    // 1 - Mettre au pluriel
+    #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'tags')]
     private Collection $videos;
 
     public function __construct()

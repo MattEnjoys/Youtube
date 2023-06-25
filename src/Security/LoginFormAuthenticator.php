@@ -46,6 +46,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+
         // Exemple généré par défaut:
         // 1 - Décommenter la ligne qui suit et on commente la ligne d'après
         return new RedirectResponse($this->urlGenerator->generate('app_home'));

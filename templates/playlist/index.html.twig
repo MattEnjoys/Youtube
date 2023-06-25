@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gestion playlists' %}
+
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row">
+                <h1 class="mb-2">Gestion des playlists</h1>
+
+                <div class="col-2 mb-5">
+                    <a href="{{ path('app_playlist_new') }}" class="btn btn-sm btn-success">Créer une playlist</a>
+                </div>
+
+                <div class="w-100"></div>
+
+                <div class="col">
+                    <div class="table-responsive small">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Date création</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for playlist in playlists %}
+                                <tr class="align-middle text-start bg-secondary">
+                                    <td>{{ playlist.id }}</td>
+                                    <td><b>{{ playlist.name }}</b></td>
+                                    <td><i class="text-secondary">{{ playlist.createdAt ? playlist.createdAt|date('Y-m-d H:i:s') : '' }}</i></td>
+                                </tr>
+                                {% for video in playlist.videos %}
+                                    <tr class="align-middle text-start">
+                                        <td><small style="font-weight: bold;" class="mb-3">{{ video.title }}</small></td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">Tableau vide</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

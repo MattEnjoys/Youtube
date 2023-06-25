@@ -2,18 +2,19 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\EntityTimeTrait;
+use App\Repository\VideoRepository;
+use Datetime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\VideoRepository;
-use App\Entity\Traits\EntityTimeTrait;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use DateTime;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
 {
     use EntityTimeTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,17 +33,20 @@ class Video
     private ?string $thumbnail = null;
 
     #[ORM\ManyToMany(targetEntity: Playlist::class, inversedBy: 'videos')]
-    private Collection $playlist;
+    // 2 - Mettre au pluriel
+    private Collection $playlists;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'videos')]
-    private Collection $tag;
+    // 2 - Mettre au pluriel
+    private Collection $tags;
 
     public function __construct()
     {
-        $this->playlist = new ArrayCollection();
-        $this->tag = new ArrayCollection();
-        //Ajouter par défaut une date d'ajout
-        $this->setCreatedAt(new \DateTime());
+        // 2 - Mettre au pluriel
+        $this->playlists = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        // 1- Ajouter par défaut une date d'ajout
+        $this->setCreatedAt(new Datetime());
     }
 
     public function getId(): ?int
@@ -101,15 +105,17 @@ class Video
     /**
      * @return Collection<int, Playlist>
      */
-    public function getPlaylist(): Collection
+    // 2 - Mettre au pluriel
+    public function getPlaylists(): Collection
     {
-        return $this->playlist;
+        // 2 - Mettre au pluriel
+        return $this->playlists;
     }
 
     public function addPlaylist(Playlist $playlist): static
     {
-        if (!$this->playlist->contains($playlist)) {
-            $this->playlist->add($playlist);
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists->add($playlist);
         }
 
         return $this;
@@ -117,7 +123,7 @@ class Video
 
     public function removePlaylist(Playlist $playlist): static
     {
-        $this->playlist->removeElement($playlist);
+        $this->playlists->removeElement($playlist);
 
         return $this;
     }
@@ -125,15 +131,17 @@ class Video
     /**
      * @return Collection<int, Tag>
      */
-    public function getTag(): Collection
+    // 2 - Mettre au pluriel
+    public function getTags(): Collection
     {
-        return $this->tag;
+        // 2 - Mettre au pluriel
+        return $this->tags;
     }
 
     public function addTag(Tag $tag): static
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag->add($tag);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
         }
 
         return $this;
@@ -141,7 +149,8 @@ class Video
 
     public function removeTag(Tag $tag): static
     {
-        $this->tag->removeElement($tag);
+        // 2 - Mettre au pluriel
+        $this->tags->removeElement($tag);
 
         return $this;
     }

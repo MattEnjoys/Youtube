@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Tag;
 use App\Entity\Video;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,8 +25,9 @@ class VideoType extends AbstractType
             // On a mis dans le Video.php, par défaut, l'ajout de la date de post donc plus besoin
             // ->add('createdAt')
             // ->add('updatedAt')
-            ->add('tag', EntityType::class, [
+            ->add('tags', EntityType::class, [
                 'class' => Tag::class,
+                'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
             ])

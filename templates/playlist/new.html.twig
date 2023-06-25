@@ -6,16 +6,16 @@
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row">
-                <h1 class="mb-2">Gestion des vidéos</h1>
+                <h1 class="mb-2">Gestion des playlists</h1>
 
                 <div class="col-2 mb-5">
-                    <a href="{{ path('app_video_index') }}" class="btn btn-sm btn-secondary">Gérer les vidéos</a>
+                    <a href="{{ path('app_playlist_index') }}" class="btn btn-sm btn-secondary">Gérer les playlists</a>
                 </div>
 
                 <div class="w-100"></div>
 
                 <div class="col">
-                    {{ include('video/includes/_form.html.twig') }}
+                    {{ include('playlist/includes/_form.html.twig') }}
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\EntityTimeTrait;
 use App\Repository\PlaylistRepository;
+use Datetime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Playlist
 {
     use EntityTimeTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,16 +22,20 @@ class Playlist
     #[ORM\Column(length: 64)]
     private ?string $name = null;
 
+    // 1 - Mettre au pluriel
     #[ORM\ManyToOne(inversedBy: 'playlists')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'playlist')]
+    // 1 - Mettre au pluriel
+    #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: 'playlists')]
     private Collection $videos;
 
     public function __construct()
     {
         $this->videos = new ArrayCollection();
+        // 2 - Ajout du createdAt
+        $this->setCreatedAt(new DateTime());
     }
 
     public function getId(): ?int

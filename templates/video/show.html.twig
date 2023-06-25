@@ -1,46 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Video{% endblock %}
+{% block title 'Fiche vidéo' %}
 
-{% block body %}
-    <h1>Video</h1>
+{% block content %}
+	<div class="album py-5 bg-body-tertiary">
+		<div class="container">
+			<div class="row">
+				<h1 class="mb-2">{{ video.title }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ video.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ video.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ video.description }}</td>
-            </tr>
-            <tr>
-                <th>Url</th>
-                <td>{{ video.url }}</td>
-            </tr>
-            <tr>
-                <th>Thumbnail</th>
-                <td>{{ video.thumbnail }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ video.updatedAt ? video.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+				<div class="col-2 mb-5">
+					<a href="{{ path('app_home') }}" class="btn btn-sm btn-success">Retourner sur l'accueil</a>
+				</div>
 
-    <a href="{{ path('app_video_index') }}">back to list</a>
+				<div class="w-100"></div>
 
-    <a href="{{ path('app_video_edit', {'id': video.id}) }}">edit</a>
-
-    {{ include('video/_delete_form.html.twig') }}
+				<div class="col">
+					<div class="card shadow-sm" style="min-height: 700px;">
+						<img src="{{ video.thumbnail }}" class="img-responsive">
+						<div class="card-body p-5">
+							<h3 style="font-weight: bold;" class="mb-3">{{ video.title }}</h3>
+							<small class="card-text text-secondary">{{ video.description }}</small>
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="btn-group mt-5">
+									<a href="{{ video.url }}" type="button" class="btn btn-sm btn-outline-secondary">Regarder la vidéo</a>
+									<ul>
+										{# Système d'ajout à la playlist #}
+										{% for playlist in playlists %}
+											<li>
+												<a class="dropdown-item" href="{{ path('app_playlist_add_video', {'video': video.id, 'playlist': playlist.id}) }}">{{ playlist.name }}</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+								<small class="text-body-secondary">{{ video.createdAt|date('d-m-Y') }}</small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
